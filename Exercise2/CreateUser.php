@@ -11,7 +11,11 @@ $newUser = $_POST["userName"];
   $query = "SELECT user_id FROM Users WHERE user_id='".$newUser."'";
   $result = $mysqli->query($query);
 
-  if($result->fetch_assoc() == NULL && $newUser !== "")
+  if($newUser == "")
+  {
+    echo "Blank user name is not allowed";
+  }
+  else if($result->fetch_assoc() == NULL)
   {
     $createQuery = "INSERT INTO Users (user_id) VALUES ('". $newUser ."')";
     $mysqli->query($createQuery);
