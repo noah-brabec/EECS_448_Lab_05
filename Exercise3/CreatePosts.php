@@ -1,6 +1,7 @@
 <?php
 $mysqli = new mysqli("mysql.eecs.ku.edu", "n810b943", "Aig9oi3X", "n810b943");
-$newUser = $_POST["userName"];
+$userName = $_POST["userName"];
+$postContent = $_POST["post"];
 
 /* check connection */
   if ($mysqli->connect_errno) {
@@ -8,28 +9,23 @@ $newUser = $_POST["userName"];
       exit();
   }
 
-  $query = "SELECT user_id FROM Users WHERE user_id='".$newUser."'";
+  $query = "SELECT user_id FROM Users WHERE user_id='".$userName."'";
   $result = $mysqli->query($query);
 
-  if($newUser == "")
+  if($postContent == "")
   {
-    echo "Blank user name is not allowed";
+    echo "There must be something in the post";
   }
   else if($result->fetch_assoc() == NULL)
   {
-    $createQuery = "INSERT INTO Users (user_id) VALUES ('". $newUser ."')";
-    $mysqli->query($createQuery);
-    echo "User Created!";
+    echo "You can only post as a valid user (user not found)";
   }
   else
   {
-    echo "A user already exists with that name<br>";
-    echo "(click the back button)";
+    $createQuery = "INSERT INTO Posts (content, author_id) VALUES ('". $postContent ."', '". $userName ."')";
+    $mysqli->query($createQuery);
+    echo "Post Succesfully Created!";
   }
-
-  $result->free();
-  $mysqli->close();
-?>
 
   $result->free();
   $mysqli->close();
