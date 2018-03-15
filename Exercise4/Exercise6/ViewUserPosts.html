@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <h3>Pick a user and click submit to view posts</h3>
+    <form action="ViewUserPosts.php" method="post">
+      <select name = "dropDown">
+        <?php
+          $mysqli = new mysqli("mysql.eecs.ku.edu", "n810b943", "Aig9oi3X", "n810b943");
+          if ($mysqli->connect_errno) {
+              printf("Connect failed: %s\n", $mysqli->connect_error);
+              exit();
+          }
+
+          $query = "SELECT * FROM Users";
+          $result = $mysqli->query($query);
+
+          $output = "";
+          $nameValue = "users";
+          while($row = $result->fetch_assoc())
+          {
+            $output = "<option value=".$row["user_id"].">".$row["user_id"]."</option>";
+            echo $output;
+          }
+        ?>
+      </select><br>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
