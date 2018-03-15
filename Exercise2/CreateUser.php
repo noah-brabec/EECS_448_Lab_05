@@ -11,7 +11,7 @@ $newUser = $_POST["userName"];
   $query = "SELECT user_id FROM Users WHERE user_id='".$newUser."'";
   $result = $mysqli->query($query);
 
-  if($result->fetch_assoc() == NULL)
+  if($result->fetch_assoc() == NULL && $newUser !== "")
   {
     $createQuery = "INSERT INTO Users (user_id) VALUES ('". $newUser ."')";
     $mysqli->query($createQuery);
